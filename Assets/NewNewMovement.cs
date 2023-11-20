@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class newMovement : MonoBehaviour
+public class NewNewMovement : MonoBehaviour
 {
 
-    private float maxSpeed = 10;
-    private float currentSpeed = 1;
-    private float acceleration = 4f;
-    private float maxAcceleration = 8;
-    private float currentAcceleration = 1.5f;
-    private float jumpForce = 0.3f;
-    private bool isGrounded = false;
-    private bool isWalled = false;
+    [SerializeField] private float maxSpeed = 10;
+    [SerializeField] private float currentSpeed = 1;
+    [SerializeField] private float acceleration = 4f;
+    [SerializeField] private float maxAcceleration = 8;
+    [SerializeField] private float currentAcceleration = 1.5f;
+    [SerializeField] private float jumpForce = 0.3f;
+    [SerializeField] private bool isGrounded = false;
+    [SerializeField] private bool isWalled = false;
 
     //private bool isMoving = false;
     //private float decceleration = 8;
@@ -28,20 +28,7 @@ public class newMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.D))
-        {
-            currentAcceleration += acceleration;
-            rb.AddForce(transform.right * (currentSpeed += currentAcceleration) * (Time.deltaTime));
-            //isMoving = true;
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            currentAcceleration += acceleration;
-            rb.AddForce(-transform.right * (currentSpeed += currentAcceleration) * (Time.deltaTime));
-            //isMoving = true;
-        }
-
+        
         if (Input.GetKeyDown(KeyCode.W) && isGrounded == true)
         {
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
@@ -50,7 +37,7 @@ public class newMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.W) && isWalled == true)
         {
-            rb.AddForce(transform.up * jumpForce * 2, ForceMode2D.Impulse); 
+            rb.AddForce(transform.up * jumpForce * 2, ForceMode2D.Impulse);
             isGrounded = false;
             isWalled = false;
         }
@@ -70,11 +57,11 @@ public class newMovement : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == ("Ground"))
-        { 
+        {
             isGrounded = true;
             isWalled = false;
         }
-        
+
         if (collision.gameObject.tag == "Wall")
         {
             isWalled = true;
@@ -84,13 +71,29 @@ public class newMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (currentAcceleration >= maxAcceleration) 
+        if (Input.GetKey(KeyCode.D))
+        {
+            currentAcceleration += acceleration;
+            rb.AddForce(transform.right * (currentSpeed += currentAcceleration) * (Time.deltaTime));
+            //isMoving = true;
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            currentAcceleration += acceleration;
+            rb.AddForce(-transform.right * (currentSpeed += currentAcceleration) * (Time.deltaTime));
+            //isMoving = true;
+        }
+
+        rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
+
+        if (currentAcceleration >= maxAcceleration)
         {
             currentAcceleration = maxAcceleration;
         }
 
-        if (currentSpeed >= maxSpeed) 
-        { 
+        if (currentSpeed >= maxSpeed)
+        {
             currentSpeed = maxSpeed;
         }
 
@@ -99,7 +102,7 @@ public class newMovement : MonoBehaviour
         {
             rb.AddForce(transform.right * (currentSpeed -= decceleration));
         }
-          */ 
-            
+          */
+
     }
 }

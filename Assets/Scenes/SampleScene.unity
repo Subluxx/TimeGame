@@ -205,8 +205,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7048540533281014744, guid: 812754cea34875249b410deeb939d278, type: 3}
-      insertIndex: 2
-      addedObject: {fileID: 1097729997}
+      insertIndex: -1
+      addedObject: {fileID: 1097730002}
   m_SourcePrefab: {fileID: 100100000, guid: 812754cea34875249b410deeb939d278, type: 3}
 --- !u!1 &519420028
 GameObject:
@@ -533,7 +533,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7048540533281014744, guid: 812754cea34875249b410deeb939d278, type: 3}
   m_PrefabInstance: {fileID: 425211034}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1097729997
+--- !u!114 &1097730002
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -542,9 +542,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1097729991}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02f437840cea3a24487ae2b5e4cf2ad3, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ed3c19382c7fc049b355e26603ad0bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 10
+  currentSpeed: 1
+  acceleration: 4
+  maxAcceleration: 8
+  currentAcceleration: 1.5
+  jumpForce: 0.3
+  isGrounded: 0
+  isWalled: 0
 --- !u!4 &2089099239 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5692639807327092992, guid: e0a847dde768fa545914ab99f03dffc5, type: 3}
