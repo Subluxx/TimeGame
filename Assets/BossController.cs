@@ -9,7 +9,7 @@ public class BossController : MonoBehaviour
     float r;
     public float Target;
     public float rndR;
-    private int point;
+    [SerializeField] private int rotationDir;
     public Transform player;
     private Rigidbody2D rb;
     private Vector3 direction;
@@ -39,10 +39,18 @@ public class BossController : MonoBehaviour
 
     private void spin()
     {
-        //Angle = Mathf.SmoothDampAngle(transform.eulerAngles.z, AngleA, ref r, 0.1f);
-        Angle = Mathf.SmoothDampAngle(transform.eulerAngles.z, AngleA, ref r, 0.1f);
+        /*
+        if (rotationDir == 0)
+        {
+            AngleA -= 120;
+        }
+        else
+        {
+            AngleA += 120;
+        }
+        */
+        Angle = Mathf.SmoothDampAngle(transform.eulerAngles.z, 720, ref r, 1f);
         transform.rotation = Quaternion.Euler(0, 0, Angle);
-        point = UnityEngine.Random.Range(1, 3);
     }
 
     public void ChangeAngle()
@@ -51,21 +59,7 @@ public class BossController : MonoBehaviour
         AngleA = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         AngleA += 28;
 
-        point = UnityEngine.Random.Range(1, 3);
-
-        switch (point)
-        {
-            case 1:
-                AngleA += 120;
-                break;
-            case 2:
-                AngleA += 240;
-                break;
-                case 3:
-                AngleA += 360;
-                break;
-        }
-        
+        rotationDir = UnityEngine.Random.Range(0, 2);
     }
 
     public void TakeDamage(int damage)

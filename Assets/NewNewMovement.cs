@@ -11,6 +11,7 @@ public class NewNewMovement : MonoBehaviour
     [SerializeField] private float maxAcceleration = 8;
     [SerializeField] private float currentAcceleration = 1.5f;
     [SerializeField] private float jumpForce = 0.3f;
+    [SerializeField] private bool doubleJump = true;
     [SerializeField] private bool isGrounded = false;
     [SerializeField] private bool isWalled = false;
 
@@ -42,9 +43,19 @@ public class NewNewMovement : MonoBehaviour
             isWalled = false;
         }
 
+        if (Input.GetKeyUp(KeyCode.W) && doubleJump == true && isGrounded == false)
+        {
+            rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+            doubleJump = false;
+        }
+
         if (isGrounded == true && !Input.anyKey)
         {
             rb.drag = 2;
+        }
+        else if(isWalled == true)
+        {
+            rb.drag = 6;
         }
         else
         {
@@ -60,12 +71,19 @@ public class NewNewMovement : MonoBehaviour
         {
             isGrounded = true;
             isWalled = false;
+            doubleJump = true;
         }
 
         if (collision.gameObject.tag == "Wall")
         {
             isWalled = true;
 
+        }
+
+        if (collision.gameObject.tag == null)
+        {
+            isGrounded = false;
+            isWalled = false;
         }
     }
 
