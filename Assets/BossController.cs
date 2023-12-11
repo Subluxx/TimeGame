@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class BossController : MonoBehaviour
 {
+    [SerializeField] ParticleSystem explodeEffect;
+
     float r;
     public float Target;
     public float rndR;
@@ -18,7 +20,6 @@ public class BossController : MonoBehaviour
 
     public int health = 100;
 
-    public GameObject explodeEffect;
     
     // Start is called before the first frame update
     void Start()
@@ -39,7 +40,7 @@ public class BossController : MonoBehaviour
 
     private void spin()
     {
-        /*
+        
         if (rotationDir == 0)
         {
             AngleA -= 120;
@@ -48,8 +49,7 @@ public class BossController : MonoBehaviour
         {
             AngleA += 120;
         }
-        */
-        Angle = Mathf.SmoothDampAngle(transform.eulerAngles.z, 720, ref r, 1f);
+        Angle = Mathf.SmoothDampAngle(transform.eulerAngles.z, 720, ref r, 0.3f);
         transform.rotation = Quaternion.Euler(0, 0, Angle);
     }
 
@@ -64,7 +64,7 @@ public class BossController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        Instantiate(explodeEffect, transform.position, Quaternion.identity);
+        explodeEffect.Play();
         health -= damage;
         Debug.Log("damage Taken");
     }

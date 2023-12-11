@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class NewNewMovement : MonoBehaviour
 {
+    [SerializeField] ParticleSystem JumoPartical;
 
     [SerializeField] private float maxSpeed = 10;
     [SerializeField] private float currentSpeed = 1;
@@ -34,6 +35,7 @@ public class NewNewMovement : MonoBehaviour
         {
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
             isGrounded = false;
+            JumoPartical.Play();
         }
 
         if (Input.GetKeyDown(KeyCode.W) && isWalled == true)
@@ -41,12 +43,14 @@ public class NewNewMovement : MonoBehaviour
             rb.AddForce(transform.up * jumpForce * 2, ForceMode2D.Impulse);
             isGrounded = false;
             isWalled = false;
+            JumoPartical.Play();
         }
 
         if (Input.GetKeyUp(KeyCode.W) && doubleJump == true && isGrounded == false)
         {
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
             doubleJump = false;
+            JumoPartical.Play();
         }
 
         if (isGrounded == true && !Input.anyKey)
@@ -59,9 +63,7 @@ public class NewNewMovement : MonoBehaviour
         }
         else
         {
-
             rb.drag = 0;
-
         }
     }
 
@@ -77,10 +79,9 @@ public class NewNewMovement : MonoBehaviour
         if (collision.gameObject.tag == "Wall")
         {
             isWalled = true;
-
         }
 
-        if (collision.gameObject.tag == null)
+        if (collision.gameObject.tag == "Air")
         {
             isGrounded = false;
             isWalled = false;
